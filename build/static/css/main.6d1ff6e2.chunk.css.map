@@ -1,0 +1,1 @@
+{"version":3,"sources":["reset.css"],"names":[],"mappings":"AAAA,EACI,QAAS,CACT,SAAU,CACV,qBACJ,CAEA,MACI,eACJ,CAEA,EACI,oBACJ","file":"main.6d1ff6e2.chunk.css","sourcesContent":["* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\nul, ol {\r\n    list-style: none;\r\n}\r\n\r\na {\r\n    text-decoration: none;\r\n}"]}

@@ -2,7 +2,7 @@
   "name": "resume-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://myname.github.io/myapp",
+  "homepage": "https://yangqyangq.github.io/react-resume",
   "dependencies": {
     "@progress/kendo-drawing": "^1.6.0",
     "@progress/kendo-react-pdf": "^3.11.0",
