@@ -1,0 +1,20 @@
+.page {
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+}
+
+.page > :global(.wrapper) {
+    min-width: var(--min-width);
+    max-width: var(--max-width);
+    height: 64px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page :global(.logo) {
+    font-size: 24px;
+    color: var(--black);
+}

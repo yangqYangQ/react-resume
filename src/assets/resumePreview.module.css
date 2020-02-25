@@ -1,0 +1,6 @@
+.page {
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+    flex-grow: 1;
+    margin-left: 16px;
+}
