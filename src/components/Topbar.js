@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Button from './Button';
 
-import styles from '../assets/topbar.module.css';
+import styles from '../assets/topbar.module.scss';
 
 class Topbar extends Component {
     render() {

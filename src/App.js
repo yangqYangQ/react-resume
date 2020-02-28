@@ -5,7 +5,7 @@ import ResumePreview from './components/ResumePreview';
 
 import 'normalize.css/normalize.css';
 import './assets/reset.css';
-import styles from './assets/app.module.css';
+import styles from './assets/app.module.scss';
 
 class App extends Component {
     render() {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import styles from '../assets/resumeEditor.module.css';
+import styles from '../assets/resumeEditor.module.scss';
 
 class ResumeEditor extends Component {
     render() {

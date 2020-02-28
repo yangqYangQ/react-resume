@@ -1,21 +1,20 @@
 .wrapper {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-}
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
 
-.wrapper > button {
+  > button {
     border: none;
     outline: none;
     cursor: pointer;
     z-index: 1;
-}
 
-.wrapper > button:hover {
-    opacity: 0.8;
-}
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 
-.wrapper > span {
+  > span {
     position: absolute;
     width: 10px;
     height: 10px;
@@ -23,13 +22,14 @@
     border-radius: 50%;
     animation: riffle .7s forwards;
     z-index: 0;
+  }
 }
 
 @keyframes riffle {
-    0% {
-        transform: scale(0.5);
-    }
-    100% {
-        transform: scale(25);
-    }
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(25);
+  }
 }

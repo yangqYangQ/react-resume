@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import styles from '../assets/resumePreview.module.css';
+import styles from '../assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
     render() {

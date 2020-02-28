@@ -1,7 +1,7 @@
 //带涟漪的按钮
 
 import React, {Component} from 'react';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 
 export default class Button extends Component {
     constructor(props) {
