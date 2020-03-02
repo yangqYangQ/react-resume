@@ -1,5 +1,70 @@
 .page {
-    width: 35%;
-    background: var(--white);
-    box-shadow: var(--box-shadow);
+  width: 35%;
+  background: var(--white);
+  box-shadow: var(--box-shadow);
+  display: flex;
+
+  > nav {
+    width: 15%;
+    min-height: 620px;
+    background-color: var(--blue);
+    color: var(--white);
+
+    > ul > li {
+      height: 48px;
+      margin: 16px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover, &:global(.active) {
+        background-color: var(--white);
+        color: var(--black);
+        cursor: pointer;
+      }
+
+      svg:global(.icon) {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  > :global(ul.panel) {
+    width: 95%;
+
+    > li {
+      display: none;
+      padding: 15px;
+
+      :global {
+        .resumeField {
+          textarea, label {
+            padding: 5px;
+            text-align: justify;
+          }
+
+          label {
+            display: block;
+          }
+
+          textarea {
+            width: 100%;
+            margin: 16px 0;
+            border: 1px solid var(--grey);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, .25);
+          }
+        }
+
+        hr {
+          margin: 24px 0;
+          border-top: 1px solid var(--grey);
+        }
+      }
+    }
+
+    > li:global(.active) {
+      display: list-item;
+    }
+  }
 }

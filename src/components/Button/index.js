@@ -37,7 +37,7 @@ export default class Button extends Component {
                 width,
                 height,
                 color: '#fff',
-                backgroundColor: '#02af5f'
+                backgroundColor: '#5f6caf'
             },
 
             'default': {
@@ -57,7 +57,7 @@ export default class Button extends Component {
             'primary': {
                 left: deltaX,
                 top: deltaY,
-                backgroundColor: 'rgba(2, 175, 95, 0.3)'
+                backgroundColor: 'rgba(98, 108, 175, 0.3)'
             },
 
             'default': {

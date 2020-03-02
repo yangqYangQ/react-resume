@@ -3,8 +3,6 @@
   box-shadow: var(--box-shadow);
 
   > :global(.wrapper) {
-    min-width: var(--min-width);
-    max-width: var(--max-width);
     height: 64px;
     margin: 0 auto;
     padding: 0 16px;
