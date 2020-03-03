@@ -1,67 +1,29 @@
 import React, {Component} from 'react';
 import {Input} from 'antd';
+import {connect} from 'react-redux';
 import Experience from './Svg/Experience';
 import PersonalInfo from './Svg/PersonalInfo';
 import Projects from './Svg/Projects';
 import Skill from './Svg/Skill';
 import Education from './Svg/Education';
-
+import {ACTION} from '../configs/mainReducer';
 import styles from '../assets/resumeEditor.module.scss';
 
 const {TextArea} = Input;
 
 class ResumeEditor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selected: 'personalInfo',
-            resume: {
-                config: [
-                    {field: 'personalInfo', title: '个人信息', component: <PersonalInfo/>},
-                    {field: 'projects', title: '我的项目', component: <Projects/>},
-                    {field: 'skills', title: '我的技能', component: <Skill/>},
-                    {field: 'experience', title: '工作经历', component: <Experience/>},
-                    {field: 'education', title: '教育经历', component: <Education/>}
-                ],
-
-                personalInfo: {
-                    city: '',
-                    birth: '',
-                    job: '',
-                    degree: '',
-                    mobile: '',
-                    QQ: '',
-                    'e-mail': '',
-                    Github: ''
-                },
-
-                projects: [{
-                    project: '',
-                    link: '',
-                    description: ''
-                }],
-
-                skills: [{
-                    skill: '',
-                    description: ''
-                }],
-
-                experience: [{
-                    company: '',
-                    date: '',
-                    mainJob: ''
-                }],
-
-                education: [{
-                    school: '',
-                    date: ''
-                }]
-            }
-        };
-    }
+    state = {
+        config: [
+            {field: 'personalInfo', title: '个人信息', component: <PersonalInfo/>},
+            {field: 'projects', title: '我的项目', component: <Projects/>},
+            {field: 'skills', title: '我的技能', component: <Skill/>},
+            {field: 'experience', title: '工作经历', component: <Experience/>},
+            {field: 'education', title: '教育经历', component: <Education/>}
+        ]
+    };
 
     getTabContent = (field) => {
-        const {resume} = this.state;
+        const {resume} = this.props;
         if (resume[field] instanceof Array) {
             return resume[field].map((item, index) =>
                 <div className="subItem" key={index}>
@@ -79,46 +41,16 @@ class ResumeEditor extends Component {
             <div className="resumeField" key={index}>
                 <label>{key}</label>
                 <TextArea value={value} autoSize
-                          onChange={e => this.inputChange(e, field, i, key)}
+                          onChange={e => this.props.updateResume(field, i, key, e.target.value)}
                 />
             </div>
         );
     };
 
-    inputChange = (e, field, index, key) => {
-        const {value} = e.target;
-        const {resume} = this.state;
-
-        if (resume[field] instanceof Array) {
-            this.setState({
-                resume: {
-                    ...resume,
-                    [field]: [
-                        ...resume[field].slice(0, index),
-                        {
-                            ...resume[field][index],
-                            [key]: value
-                        },
-                        ...resume[field].slice(index + 1)
-                    ]
-                }
-            });
-        } else {
-            this.setState({
-                resume: {
-                    ...resume,
-                    [field]: {
-                        ...resume[field],
-                        [key]: value
-                    }
-                }
-            });
-        }
-    };
-
     render() {
-        const {resume, selected} = this.state;
-        const {config = []} = resume;
+        const {config = []} = this.state;
+        const {selected, switchTab} = this.props;
+
         return (
             <div className={styles.page}>
                 <nav>
@@ -128,7 +60,7 @@ class ResumeEditor extends Component {
                                 <li key={index}
                                     title={tab.title}
                                     className={tab.field === selected ? 'active' : ''}
-                                    onClick={() => this.setState({selected: tab.field})}
+                                    onClick={() => switchTab(tab.field)}
                                 >
                                     {tab.component}
                                 </li>
@@ -153,4 +85,16 @@ class ResumeEditor extends Component {
     }
 }
 
-export default ResumeEditor;
+export default connect(
+    ({selected, resume}) => ({selected, resume}),
+    {
+        switchTab: (selected) => ({
+            type: ACTION.SET_SELETED_TAB,
+            selected
+        }),
+        updateResume: (field, index, key, value) => ({
+            type: ACTION.UPDATE_RESUME_DATA,
+            payload: {field, index, key, value}
+        })
+    }
+)(ResumeEditor);
