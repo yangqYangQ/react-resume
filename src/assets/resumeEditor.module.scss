@@ -26,12 +26,14 @@
       svg:global(.icon) {
         width: 32px;
         height: 32px;
+        fill: var(--orange)
       }
     }
   }
 
   > :global(ul.panel) {
-    width: 95%;
+    flex-grow: 1;
+    flex-basis: 0px;
 
     > li {
       display: none;

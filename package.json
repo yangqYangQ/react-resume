@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.0.0",
+    "classnames": "^2.2.6",
     "leancloud-storage": "^4.2.0",
     "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",

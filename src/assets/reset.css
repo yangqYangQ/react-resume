@@ -14,6 +14,7 @@ ul, ol {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 .icon {
@@ -27,11 +28,11 @@ a {
 /*scroll bar style*/
 html {
     --scrollbarBG: var(--white);
-    --thumbBG: var(--grey);
+    --thumbBG: var(--blue);
 }
 
 body::-webkit-scrollbar {
-    width: 11px;
+    width: 7px;
 }
 
 body {
@@ -45,6 +46,6 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
     background-color: var(--thumbBG);
-    border-radius: 6px;
-    border: 3px solid var(--scrollbarBG);
+    border-radius: 20px;
+    border: 3px solid var(--thumbBG);
 }

@@ -1,0 +1,23 @@
+:global {
+  .progress-bar {
+    background-color: var(--theme-color);
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--white);
+    border-radius: 10px;
+    min-height: 10px;
+  }
+
+  .partial {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .small {
+    font-size: 12px;
+  }
+}

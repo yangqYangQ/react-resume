@@ -1,6 +1,117 @@
 .page {
-    background: var(--white);
-    box-shadow: var(--box-shadow);
-    flex-grow: 1;
-    margin-left: 16px;
+  background: var(--white);
+  box-shadow: var(--box-shadow);
+  flex-grow: 1;
+  flex-basis: 0px;
+  margin-left: 16px;
+  padding: 12px;
+
+  :global {
+    h1 {
+      color: var(--theme-color);
+      text-align: center;
+    }
+
+    section {
+      margin-bottom: 15px;
+
+      > .resume-section-total-heading {
+        color: var(--theme-color);
+        border-bottom: 1px solid var(--theme-color);
+        display: flex;
+        align-items: center;
+
+        > svg.icon {
+          margin-right: 5px;
+          width: 25px;
+          height: 25px;
+          fill: var(--theme-color);
+        }
+
+        > h2 {
+          font-size: 20px;
+        }
+      }
+
+      .padding-5 {
+        padding: 5px;
+      }
+
+      .resume-item {
+        &::before {
+          content: '';
+          width: 6px;
+          height: 6px;
+          background-color: var(--theme-color);
+          float: left;
+          margin: 7px;
+        }
+
+        span:first-child {
+          color: var(--theme-color);
+          float: left;
+        }
+
+        span:last-child {
+          align-self: center;
+          float: right;
+        }
+
+        &::after {
+          content: '';
+          display: block;
+          clear: both;
+        }
+
+        + p {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    section.personalInfo {
+      .brief-info {
+        border-right: 1px solid;
+        margin-right: 10px;
+        padding-right: 10px;
+      }
+
+      .brief-info:last-child {
+        border: none;
+      }
+    }
+
+    section.projects {
+      .resume-item {
+        svg.icon {
+          fill: var(--theme-color);
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    section.skills {
+      .skill-items {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          width: 50%;
+
+          .skill-item-text, .skill-item-progress {
+            overflow: hidden;
+            padding: 0 15px;
+            flex-grow: 1;
+            max-width: 100%;
+            flex-basis: 0px;
+          }
+        }
+      }
+    }
+  }
 }

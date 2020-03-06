@@ -10,8 +10,8 @@ class Topbar extends Component {
                 <div className="wrapper">
                     <span className="logo">Resume</span>
                     <div className="actions">
-                        <Button content='保存' type='primary'/>
-                        <Button content='预览' left={10}/>
+                        {/*<Button content='保存' type='primary'/>*/}
+                        {/*<Button content='预览' left={10}/>*/}
                     </div>
                 </div>
             </div>

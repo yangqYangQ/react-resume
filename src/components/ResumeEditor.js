@@ -1,39 +1,29 @@
 import React, {Component} from 'react';
 import {Input} from 'antd';
 import {connect} from 'react-redux';
-import Experience from './Svg/Experience';
-import PersonalInfo from './Svg/PersonalInfo';
-import Projects from './Svg/Projects';
-import Skill from './Svg/Skill';
-import Education from './Svg/Education';
 import {ACTION} from '../configs/mainReducer';
 import styles from '../assets/resumeEditor.module.scss';
 
 const {TextArea} = Input;
 
 class ResumeEditor extends Component {
-    state = {
-        config: [
-            {field: 'personalInfo', title: '个人信息', component: <PersonalInfo/>},
-            {field: 'projects', title: '我的项目', component: <Projects/>},
-            {field: 'skills', title: '我的技能', component: <Skill/>},
-            {field: 'experience', title: '工作经历', component: <Experience/>},
-            {field: 'education', title: '教育经历', component: <Education/>}
-        ]
-    };
 
     getTabContent = (field) => {
-        const {resume} = this.props;
+        const {resume, addItemInArray} = this.props;
         if (resume[field] instanceof Array) {
-            return resume[field].map((item, index) =>
+            const items = resume[field].map((item, index) =>
                 <div className="subItem" key={index}>
                     {this.iteratorObj(field, item, index)}
                     <hr/>
                 </div>
             );
+            return items.concat(<button onClick={() => addItemInArray(field)}>新增</button>);
         } else {
             return this.iteratorObj(field, resume[field]);
         }
+    };
+
+    addSubItem = (field) => {
     };
 
     iteratorObj = (field, item, i) => {
@@ -48,8 +38,7 @@ class ResumeEditor extends Component {
     };
 
     render() {
-        const {config = []} = this.state;
-        const {selected, switchTab} = this.props;
+        const {selected, switchTab, config = []} = this.props;
 
         return (
             <div className={styles.page}>
@@ -86,7 +75,7 @@ class ResumeEditor extends Component {
 }
 
 export default connect(
-    ({selected, resume}) => ({selected, resume}),
+    ({selected, resume, config}) => ({selected, resume, config}),
     {
         switchTab: (selected) => ({
             type: ACTION.SET_SELETED_TAB,
@@ -95,6 +84,7 @@ export default connect(
         updateResume: (field, index, key, value) => ({
             type: ACTION.UPDATE_RESUME_DATA,
             payload: {field, index, key, value}
-        })
+        }),
+        addItemInArray: (field) => ({type: ACTION.ADD_ITEM, field})
     }
 )(ResumeEditor);
