@@ -1,0 +1,41 @@
+{
+  "add": "新增",
+  "vita": "的个人简历",
+  "preview": "预览",
+  "resume": {
+    "personalInfo": {
+      "_": "个人信息",
+      "name": "姓名",
+      "city": "城市",
+      "birth": "出生日期",
+      "job": "职位",
+      "degree": "学历",
+      "mobile": "手机号",
+      "QQ": "QQ",
+      "e-mail": "电子邮件",
+      "github": "Github"
+    },
+    "projects": {
+      "_": "项目经历",
+      "name": "项目名称",
+      "link": "预览地址",
+      "details": "项目介绍"
+    },
+    "skills": {
+      "_": "我的技能",
+      "name": "名称",
+      "level": "熟练程度"
+    },
+    "experience": {
+      "_": "工作经历",
+      "company": "工作单位",
+      "date": "时间",
+      "details": "详情"
+    },
+    "education": {
+      "_": "教育经历",
+      "school": "毕业院校",
+      "date": "时间"
+    }
+  }
+}

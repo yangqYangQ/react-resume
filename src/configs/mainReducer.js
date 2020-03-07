@@ -10,30 +10,26 @@ const defaultState = {
     config: [
         {
             field: 'personalInfo',
-            title: '个人信息',
             component: <PersonalInfo/>,
-            keys: ['name', 'city', 'birth', 'job', 'degree', 'mobile', 'QQ', 'e-mail', 'Github']
+            keys: ['name', 'city', 'birth', 'job', 'degree', 'mobile', 'QQ', 'e-mail', 'github']
         },
 
         {
             field: 'projects',
-            title: '我的项目',
             component: <Projects/>,
             type: 'array',
-            keys: ['project', 'link', 'details']
+            keys: ['name', 'link', 'details']
         },
 
         {
             field: 'skills',
-            title: '我的技能',
             component: <Skill/>,
             type: 'array',
-            keys: ['skill', 'level']
+            keys: ['name', 'level']
         },
 
         {
             field: 'experience',
-            title: '工作经历',
             component: <Experience/>,
             type: 'array',
             keys: ['company', 'date', 'details']
@@ -41,7 +37,6 @@ const defaultState = {
 
         {
             field: 'education',
-            title: '教育经历',
             component: <Education/>,
             type: 'array',
             keys: ['school', 'date']

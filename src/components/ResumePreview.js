@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {withTranslation} from 'react-i18next';
 import PersonalInfo from './Svg/PersonalInfo';
 import Experience from './Svg/Experience';
 import Education from './Svg/Education';
@@ -11,18 +13,18 @@ import styles from '../assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
     render() {
-        const {resume: {personalInfo, projects, skills, experience, education}} = this.props;
+        const {resume: {personalInfo, projects, skills, experience, education}, t} = this.props;
 
         return (
             <div className={styles.page}>
                 {
                     (personalInfo && personalInfo.name) ?
                         <>
-                            <h1>{personalInfo.name}的个人简历</h1>
+                            <h1>{personalInfo.name}{t('vita')}</h1>
                             <section className='personalInfo'>
                                 <div className='resume-section-total-heading'>
                                     <PersonalInfo/>
-                                    <h2>个人信息</h2>
+                                    <h2>{t('resume.personalInfo._')}</h2>
                                 </div>
                                 <div className='padding-5'>
                                     <span className='brief-info'>{personalInfo.city}</span>
@@ -31,23 +33,23 @@ class ResumePreview extends Component {
                                     <span className='brief-info'>{personalInfo.degree}</span>
                                 </div>
                                 <div className='padding-5'>
-                                    <label>手机：</label>
+                                    <label>{`${t('resume.personalInfo.mobile')}：`}</label>
                                     <a href={`tel:${personalInfo.mobile}`}>
                                         <span>{personalInfo.mobile}</span>
                                     </a>
                                 </div>
                                 <div className='padding-5'>
-                                    <label>QQ：</label>
+                                    <label>{`${t('resume.personalInfo.QQ')}：`}</label>
                                     <span>{personalInfo.QQ}</span>
                                 </div>
                                 <div className='padding-5'>
-                                    <label>邮箱：</label>
+                                    <label>{`${t('resume.personalInfo.e-mail')}：`}</label>
                                     <a href={`mailto:${personalInfo['e-mail']}`}>
                                         <span>{personalInfo['e-mail']}</span>
                                     </a>
                                 </div>
                                 <div className='padding-5'>
-                                    <label>Github：</label>
+                                    <label>{`${t('resume.personalInfo.github')}：`}</label>
                                     <a href={personalInfo['Github']} target='_blank'
                                        rel="noopener noreferrer"
                                     >
@@ -63,16 +65,16 @@ class ResumePreview extends Component {
                         <section className='projects'>
                             <div className='resume-section-total-heading'>
                                 <Projects/>
-                                <h2>项目经历</h2>
+                                <h2>{`${t('resume.projects._')}：`}</h2>
                             </div>
                             <ol>
                                 {
-                                    projects.map(({details, link, project}, index) =>
+                                    projects.map(({details, link, name}, index) =>
                                         <li key={index} className='padding-5'>
                                             <div className='resume-item'>
-                                                <span>{project}</span>
+                                                <span>{name}</span>
                                                 <span>
-                                                    <a href={`${link}`} title='预览' target='_blank'
+                                                    <a href={`${link}`} title={t('preview')} target='_blank'
                                                        rel="noopener noreferrer">
                                                         <Preview/>
                                                     </a>
@@ -91,13 +93,13 @@ class ResumePreview extends Component {
                         <section className='skills'>
                             <div className='resume-section-total-heading'>
                                 <Skill/>
-                                <h2>技能</h2>
+                                <h2>{t('resume.skills._')}</h2>
                             </div>
                             <ol className='skill-items'>
                                 {
-                                    skills.map(({level, skill}, index) =>
+                                    skills.map(({level, name}, index) =>
                                         <li key={index} className='padding-5'>
-                                            <span className='skill-item-text'>{skill}</span>
+                                            <span className='skill-item-text'>{name}</span>
                                             <div className='skill-item-progress'>
                                                 <ProgressBar value={level} size='small'/>
                                             </div>
@@ -113,7 +115,7 @@ class ResumePreview extends Component {
                         <section className='experience'>
                             <div className='resume-section-total-heading'>
                                 <Experience/>
-                                <h2>工作经历</h2>
+                                <h2>{t('resume.experience._')}</h2>
                             </div>
                             <ol>
                                 {
@@ -136,7 +138,7 @@ class ResumePreview extends Component {
                         <section className='education'>
                             <div className='resume-section-total-heading'>
                                 <Education/>
-                                <h2>教育背景</h2>
+                                <h2>{t('resume.education._')}</h2>
                             </div>
                             <ol>
                                 {
@@ -157,6 +159,7 @@ class ResumePreview extends Component {
     }
 }
 
-export default connect(
-    ({resume}) => ({resume})
+export default compose(
+    withTranslation(),
+    connect(({resume}) => ({resume}))
 )(ResumePreview);

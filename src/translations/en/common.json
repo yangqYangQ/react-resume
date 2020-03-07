@@ -1,0 +1,41 @@
+{
+  "add": "add an item",
+  "vita": "'s resume",
+  "preview": "preview",
+  "resume": {
+    "personalInfo": {
+      "_": "personal info",
+      "name": "full name",
+      "city": "location",
+      "birth": "birthday",
+      "job": "job",
+      "degree": "degree",
+      "mobile": "mobile",
+      "QQ": "QQ",
+      "e-mail": "e-mail",
+      "github": "Github"
+    },
+    "projects": {
+      "_": "projects",
+      "name": "project name",
+      "link": "preview link",
+      "details": "project detail"
+    },
+    "skills": {
+      "_": "skills",
+      "name": "skill",
+      "level": "how much you master"
+    },
+    "experience": {
+      "_": "work experience",
+      "company": "company",
+      "date": "date",
+      "details": "main work"
+    },
+    "education": {
+      "_": "education",
+      "school": "which school have you graduted",
+      "date": "date"
+    }
+  }
+}
