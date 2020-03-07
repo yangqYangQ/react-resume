@@ -67,7 +67,7 @@ class ResumePreview extends Component {
                             </div>
                             <ol>
                                 {
-                                    projects.map(({description, link, project}, index) =>
+                                    projects.map(({details, link, project}, index) =>
                                         <li key={index} className='padding-5'>
                                             <div className='resume-item'>
                                                 <span>{project}</span>
@@ -78,7 +78,7 @@ class ResumePreview extends Component {
                                                     </a>
                                                 </span>
                                             </div>
-                                            <p>{description}</p>
+                                            <p>{details}</p>
                                         </li>
                                     )
                                 }
@@ -117,13 +117,13 @@ class ResumePreview extends Component {
                             </div>
                             <ol>
                                 {
-                                    experience.map(({company, date, mainJob}, index) =>
+                                    experience.map(({company, date, details}, index) =>
                                         <li key={index} className='padding-5'>
                                             <div className='resume-item'>
                                                 <span>{company}</span>
                                                 <span>{date}</span>
                                             </div>
-                                            <p>{mainJob}</p>
+                                            <p>{details}</p>
                                         </li>
                                     )
                                 }

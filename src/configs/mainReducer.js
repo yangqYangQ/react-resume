@@ -20,7 +20,7 @@ const defaultState = {
             title: '我的项目',
             component: <Projects/>,
             type: 'array',
-            keys: ['project', 'link', 'description']
+            keys: ['project', 'link', 'details']
         },
 
         {
@@ -36,7 +36,7 @@ const defaultState = {
             title: '工作经历',
             component: <Experience/>,
             type: 'array',
-            keys: ['company', 'date', 'mainJob']
+            keys: ['company', 'date', 'details']
         },
 
         {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Input} from 'antd';
 import {connect} from 'react-redux';
 import {ACTION} from '../configs/mainReducer';
+import AddSvg from './Svg/Add';
 import styles from '../assets/resumeEditor.module.scss';
 
 const {TextArea} = Input;
@@ -17,7 +18,15 @@ class ResumeEditor extends Component {
                     <hr/>
                 </div>
             );
-            return items.concat(<button onClick={() => addItemInArray(field)}>新增</button>);
+            return items.concat(
+                <button className='btn btn-dashed'
+                        key='add-button'
+                        onClick={() => addItemInArray(field)}
+                >
+                    <span className='action-plus'><AddSvg/></span>
+                    <span>新增</span>
+                </button>
+            );
         } else {
             return this.iteratorObj(field, resume[field]);
         }
