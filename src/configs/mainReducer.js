@@ -48,19 +48,60 @@ export const ACTION = {
     SET_SELETED_TAB: 'setSelectedTab',
     UPDATE_RESUME_DATA: 'updateResume',
     INIT_RESUME_DATA: 'initResume',
-    ADD_ITEM: 'addItemInArray'
+    ADD_ITEM: 'addItemInArray',
+    DELETE_ITEM: 'deleteItemInArray'
 };
 
 export default (state = defaultState, action) => {
+    const {resume, config} = state;
+
+    const {selected, field, index, key, value} = action.payload || {};
+
     switch (action.type) {
         case ACTION.SET_SELETED_TAB:
             return {
                 ...state,
-                selected: action.selected
+                selected
             };
+
+        case ACTION.INIT_RESUME_DATA:
+            let initResume = {};
+            config.forEach(item => {
+                if (item.type === 'array') {
+                    initResume[item.field] = [];
+                } else {
+                    initResume[item.field] = {};
+                    item.keys.forEach(key => {
+                        initResume[item.field][key] = '';
+                    });
+                }
+            });
+
+            return {
+                ...state,
+                resume: initResume
+            };
+
+        case ACTION.ADD_ITEM:
+            let newItem = {};
+
+            config.find(item => item.field === field)
+                .keys.forEach(key => {
+                newItem[key] = '';
+            });
+
+            return {
+                ...state,
+                resume: {
+                    ...resume,
+                    [field]: [
+                        ...resume[field],
+                        newItem
+                    ]
+                }
+            };
+
         case ACTION.UPDATE_RESUME_DATA:
-            const {field, index, key, value} = action.payload;
-            const {resume} = state;
             if (resume[field] instanceof Array) {
                 return {
                     ...state,
@@ -88,38 +129,15 @@ export default (state = defaultState, action) => {
                     }
                 };
             }
-        case ACTION.INIT_RESUME_DATA:
-            let initResume = {};
-            state.config.forEach(item => {
-                if (item.type === 'array') {
-                    initResume[item.field] = [];
-                } else {
-                    initResume[item.field] = {};
-                    item.keys.forEach(key => {
-                        initResume[item.field][key] = '';
-                    });
-                }
-            });
 
-            return {
-                ...state,
-                resume: initResume
-            };
-        case ACTION.ADD_ITEM:
-            let newItem = {};
-
-            state.config.find(item => item.field === action.field)
-                .keys.forEach(key => {
-                newItem[key] = '';
-            });
-
+        case ACTION.DELETE_ITEM:
             return {
                 ...state,
                 resume: {
-                    ...state.resume,
-                    [action.field]: [
-                        ...state.resume[action.field],
-                        newItem
+                    ...resume,
+                    [field]: [
+                        ...resume[field].slice(0, index),
+                        ...resume[field].slice(index + 1)
                     ]
                 }
             };

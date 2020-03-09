@@ -5,6 +5,7 @@ import {compose} from 'redux';
 import {withTranslation} from 'react-i18next';
 import {ACTION} from '../configs/mainReducer';
 import AddSvg from './Svg/Add';
+import DeleteSvg from './Svg/Delete';
 import styles from '../assets/resumeEditor.module.scss';
 
 const {TextArea} = Input;
@@ -12,11 +13,15 @@ const {TextArea} = Input;
 class ResumeEditor extends Component {
 
     getTabContent = (field) => {
-        const {resume, addItemInArray} = this.props;
+        const {resume, addItemInArray, deleteItemInArray} = this.props;
         if (resume[field] instanceof Array) {
             const items = resume[field].map((item, index) =>
                 <div className="subItem" key={index}>
-                    {this.iteratorObj(field, item, index)}
+                    <div className='btn-remove' onClick={() => deleteItemInArray(field, index)}>
+                        <DeleteSvg/>
+                    </div>
+
+                    {this.genResumeFields(field, item, index)}
                     <hr/>
                 </div>
             );
@@ -30,11 +35,11 @@ class ResumeEditor extends Component {
                 </button>
             );
         } else {
-            return this.iteratorObj(field, resume[field]);
+            return this.genResumeFields(field, resume[field]);
         }
     };
 
-    iteratorObj = (field, item, i) => {
+    genResumeFields = (field, item, i) => {
         return Object.entries(item).map(([key, value], index) =>
             <div className="resumeField" key={index}>
                 <label>{this.props.t(`resume.${field}.${key}`)}</label>
@@ -89,13 +94,23 @@ export default compose(
         {
             switchTab: (selected) => ({
                 type: ACTION.SET_SELETED_TAB,
-                selected
+                payload: {selected}
             }),
+
             updateResume: (field, index, key, value) => ({
                 type: ACTION.UPDATE_RESUME_DATA,
                 payload: {field, index, key, value}
             }),
-            addItemInArray: (field) => ({type: ACTION.ADD_ITEM, field})
+
+            addItemInArray: (field) => ({
+                type: ACTION.ADD_ITEM,
+                payload: {field}
+            }),
+
+            deleteItemInArray: (field, index) => ({
+                type: ACTION.DELETE_ITEM,
+                payload: {field, index}
+            })
         }
     )
 )(ResumeEditor);

@@ -15,8 +15,8 @@ class Topbar extends Component {
                     <div className="actions">
                         {/*<Button content='保存' type='primary'/>*/}
                         {/*<Button content='预览' left={10}/>*/}
-                        <button onClick={() => i18n.changeLanguage('zh_CN')}>zh_CN</button>
-                        <button onClick={() => i18n.changeLanguage('en')}>en</button>
+                        <button onClick={() => i18n.changeLanguage('zh_CN')}>简体中文</button>
+                        <button onClick={() => i18n.changeLanguage('en')}>English</button>
                     </div>
                 </div>
             </div>
