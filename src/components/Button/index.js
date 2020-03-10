@@ -23,6 +23,8 @@ export default class Button extends Component {
             deltaX,
             deltaY
         });
+
+        this.props.onClick && this.props.onClick();
     };
 
     hideRiffle = () => {
@@ -34,14 +36,14 @@ export default class Button extends Component {
 
         const buttonStyles = {
             'primary': {
-                width,
+                minWidth: width,
                 height,
                 color: '#fff',
                 backgroundColor: '#5f6caf'
             },
 
             'default': {
-                width,
+                minWidth: width,
                 height
             }
         };

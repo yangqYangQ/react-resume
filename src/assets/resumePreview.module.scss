@@ -7,6 +7,11 @@
   padding: 12px;
 
   :global {
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     h1 {
       color: var(--theme-color);
       text-align: center;
@@ -65,6 +70,7 @@
 
         + p {
           margin-left: 20px;
+          white-space: pre-line;
         }
       }
     }

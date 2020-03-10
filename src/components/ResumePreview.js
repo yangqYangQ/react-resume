@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withTranslation} from 'react-i18next';
+import AV from "leancloud-storage";
+import {message} from 'antd';
+
+import Button from './Button';
 import PersonalInfo from './Svg/PersonalInfo';
 import Experience from './Svg/Experience';
 import Education from './Svg/Education';
@@ -9,14 +13,76 @@ import Projects from './Svg/Projects';
 import Skill from './Svg/Skill';
 import Preview from './Svg/Preview';
 import ProgressBar from './ProgressBar';
+import {ACTION} from '../configs/mainReducer';
+
 import styles from '../assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
+    archiveResume = () => {
+        const {resume} = this.props;
+
+        if (resume.id) {
+            this.updateResume();
+        } else {
+            this.addResume();
+        }
+    };
+
+    addResume = () => {
+        const {resume, setResumeId} = this.props;
+
+        const user = AV.User.current();
+
+        const Resume = AV.Object.extend('Resume');
+        const resu = new Resume();
+
+        this.setResumeAVValues(resu, resume);
+
+        const acl = new AV.ACL();
+        acl.setReadAccess(user, true);
+        acl.setWriteAccess(user, true);
+
+        resu.setACL(acl);
+        resu.save().then((reponse) => {
+            message.success('保存成功');
+            setResumeId(reponse.id);
+        }, (error) => {
+            alert(error);
+        });
+    };
+
+    updateResume = () => {
+        const {resume} = this.props;
+
+        const resu = AV.Object.createWithoutData('Resume', resume.id);
+
+        this.setResumeAVValues(resu, resume);
+
+        resu.save().then(() => {
+            message.success('修改成功');
+        }, (error) => {
+            alert(error);
+        });
+    };
+
+    setResumeAVValues = (avObj, {personalInfo, projects, skills, experience, education}) => {
+        avObj.set('personalInfo', personalInfo);
+        avObj.set('projects', projects);
+        avObj.set('skills', skills);
+        avObj.set('experience', experience);
+        avObj.set('education', education);
+    };
+
     render() {
         const {resume: {personalInfo, projects, skills, experience, education}, t} = this.props;
 
         return (
             <div className={styles.page}>
+                <div className='actions'>
+                    <Button content={t('save')} type='primary' onClick={this.archiveResume}/>
+                    <Button content={t('preview')} left={10}/>
+                </div>
+
                 {
                     (personalInfo && personalInfo.name) ?
                         <>
@@ -50,10 +116,10 @@ class ResumePreview extends Component {
                                 </div>
                                 <div className='padding-5'>
                                     <label>{`${t('resume.personalInfo.github')}：`}</label>
-                                    <a href={personalInfo['Github']} target='_blank'
+                                    <a href={personalInfo['github']} target='_blank'
                                        rel="noopener noreferrer"
                                     >
-                                        <span>{personalInfo['Github']}</span>
+                                        <span>{personalInfo['github']}</span>
                                     </a>
                                 </div>
                             </section>
@@ -161,5 +227,13 @@ class ResumePreview extends Component {
 
 export default compose(
     withTranslation(),
-    connect(({resume}) => ({resume}))
+    connect(
+        ({resume}) => ({resume}),
+        {
+            setResumeId: (resumeId) => ({
+                type: ACTION.SET_RESUME_ID,
+                payload: {resumeId}
+            })
+        }
+    )
 )(ResumePreview);

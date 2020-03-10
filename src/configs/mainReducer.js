@@ -46,16 +46,27 @@ const defaultState = {
 
 export const ACTION = {
     SET_SELETED_TAB: 'setSelectedTab',
+
     UPDATE_RESUME_DATA: 'updateResume',
     INIT_RESUME_DATA: 'initResume',
+
     ADD_ITEM: 'addItemInArray',
-    DELETE_ITEM: 'deleteItemInArray'
+    DELETE_ITEM: 'deleteItemInArray',
+
+    SET_RESUME_ID: 'setResumeId',
+    SET_RESUME: 'setResume',
+
+    SET_USER: 'setUser'
 };
 
 export default (state = defaultState, action) => {
     const {resume, config} = state;
 
-    const {selected, field, index, key, value} = action.payload || {};
+    const {
+        selected, field, index, key, value,
+        resumeId, userId: id, username: name,
+        resumeData
+    } = action.payload || {};
 
     switch (action.type) {
         case ACTION.SET_SELETED_TAB:
@@ -80,25 +91,6 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 resume: initResume
-            };
-
-        case ACTION.ADD_ITEM:
-            let newItem = {};
-
-            config.find(item => item.field === field)
-                .keys.forEach(key => {
-                newItem[key] = '';
-            });
-
-            return {
-                ...state,
-                resume: {
-                    ...resume,
-                    [field]: [
-                        ...resume[field],
-                        newItem
-                    ]
-                }
             };
 
         case ACTION.UPDATE_RESUME_DATA:
@@ -130,6 +122,25 @@ export default (state = defaultState, action) => {
                 };
             }
 
+        case ACTION.ADD_ITEM:
+            let newItem = {};
+
+            config.find(item => item.field === field)
+                .keys.forEach(key => {
+                newItem[key] = '';
+            });
+
+            return {
+                ...state,
+                resume: {
+                    ...resume,
+                    [field]: [
+                        ...resume[field],
+                        newItem
+                    ]
+                }
+            };
+
         case ACTION.DELETE_ITEM:
             return {
                 ...state,
@@ -140,6 +151,30 @@ export default (state = defaultState, action) => {
                         ...resume[field].slice(index + 1)
                     ]
                 }
+            };
+
+        case ACTION.SET_RESUME_ID:
+            return {
+                ...state,
+                resume: {
+                    ...resume,
+                    id: resumeId
+                }
+            };
+
+        case ACTION.SET_RESUME:
+            return {
+                ...state,
+                resume: {
+                    ...resume,
+                    ...resumeData
+                }
+            };
+
+        case ACTION.SET_USER:
+            return {
+                ...state,
+                user: {id, name}
             };
 
         default:
