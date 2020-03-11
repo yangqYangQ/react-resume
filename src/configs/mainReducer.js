@@ -7,6 +7,11 @@ import Education from '../components/Svg/Education';
 
 const defaultState = {
     selected: 'personalInfo',
+    loading: false,
+    user: {
+        id: '',
+        name: ''
+    },
     config: [
         {
             field: 'personalInfo',
@@ -41,7 +46,10 @@ const defaultState = {
             type: 'array',
             keys: ['school', 'date']
         }
-    ]
+    ],
+    resume: {
+        id: ''
+    }
 };
 
 export const ACTION = {

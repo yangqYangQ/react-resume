@@ -3,6 +3,14 @@
   "vita": "的个人简历",
   "preview": "预览",
   "save": "保存",
+  "saveSucceed": "保存成功",
+  "updateSucceed": "修改成功",
+  "resumeText": "简历",
+  "signUp": "登录",
+  "login": "注册",
+  "logout": "登出",
+  "logoutSucceed": "成功登出",
+  "emptyContentWarning": "请在左侧填写简历内容",
   "resume": {
     "personalInfo": {
       "_": "个人信息",

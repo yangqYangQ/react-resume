@@ -3,6 +3,14 @@
   "vita": "'s resume",
   "preview": "preview",
   "save": "archive",
+  "saveSucceed": "successfully save",
+  "updateSucceed": "successfully update",
+  "resumeText": "Resume",
+  "signUp": "signUp",
+  "login": "login",
+  "logout": "logout",
+  "logoutSucceed": "successfully logout",
+  "emptyContentWarning": "please fill the resume content on the left",
   "resume": {
     "personalInfo": {
       "_": "personal info",

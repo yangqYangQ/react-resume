@@ -12,6 +12,7 @@ import Education from './Svg/Education';
 import Projects from './Svg/Projects';
 import Skill from './Svg/Skill';
 import Preview from './Svg/Preview';
+import EmptyDataSvg from './Svg/EmptyData';
 import ProgressBar from './ProgressBar';
 import {ACTION} from '../configs/mainReducer';
 
@@ -29,7 +30,7 @@ class ResumePreview extends Component {
     };
 
     addResume = () => {
-        const {resume, setResumeId, setLoading} = this.props;
+        const {resume, setResumeId, setLoading, t} = this.props;
 
         setLoading(true);
 
@@ -46,7 +47,7 @@ class ResumePreview extends Component {
 
         resu.setACL(acl);
         resu.save().then((reponse) => {
-            message.success('保存成功');
+            message.success(t('saveSucceed'));
             setResumeId(reponse.id);
         }, (error) => {
             alert(error);
@@ -56,7 +57,7 @@ class ResumePreview extends Component {
     };
 
     updateResume = () => {
-        const {resume, setLoading} = this.props;
+        const {resume, setLoading, t} = this.props;
 
         setLoading(true);
 
@@ -65,7 +66,7 @@ class ResumePreview extends Component {
         this.setResumeAVValues(resu, resume);
 
         resu.save().then(() => {
-            message.success('修改成功');
+            message.success(t('updateSucceed'));
         }, (error) => {
             alert(error);
         }).finally(() => {
@@ -82,14 +83,30 @@ class ResumePreview extends Component {
     };
 
     render() {
-        const {resume: {personalInfo, projects, skills, experience, education}, t} = this.props;
+        const {resume: {personalInfo, projects, skills, experience, education}, user, t} = this.props;
 
         return (
             <div className={styles.page}>
                 <div className='actions'>
-                    <Button content={t('save')} type='primary' onClick={this.archiveResume}/>
+                    {
+                        user.id ? <Button content={t('save')} type='primary' onClick={this.archiveResume}/> : null
+                    }
                     <Button content={t('preview')} left={10}/>
                 </div>
+
+                {
+                    (
+                        (!personalInfo || !personalInfo.name) &&
+                        (!projects || projects.length === 0) &&
+                        (!skills || skills.length === 0) &&
+                        (!experience || experience.length === 0) &&
+                        (!education || education.length === 0)
+                    ) ?
+                        <div className='empty-container'>
+                            <EmptyDataSvg/>
+                            <span>{t('emptyContentWarning')}</span>
+                        </div> : null
+                }
 
                 {
                     (personalInfo && personalInfo.name) ?
@@ -236,7 +253,7 @@ class ResumePreview extends Component {
 export default compose(
     withTranslation(),
     connect(
-        ({resume}) => ({resume}),
+        ({user, resume}) => ({user, resume}),
         {
             setResumeId: (resumeId) => ({
                 type: ACTION.SET_RESUME_ID,

@@ -10,16 +10,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      color: var(--blue);
 
       .logo {
         font-size: 24px;
-        color: var(--black);
       }
 
-      .switch-lang {
+      .-item-right {
+        display: flex;
+        align-items: center;
+
+        .user.actions {
+          margin-right: 20px;
+        }
+
         span {
           padding: 5px;
-          color: var(--blue);
           cursor: pointer;
         }
       }
