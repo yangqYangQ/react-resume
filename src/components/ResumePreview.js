@@ -29,7 +29,9 @@ class ResumePreview extends Component {
     };
 
     addResume = () => {
-        const {resume, setResumeId} = this.props;
+        const {resume, setResumeId, setLoading} = this.props;
+
+        setLoading(true);
 
         const user = AV.User.current();
 
@@ -48,11 +50,15 @@ class ResumePreview extends Component {
             setResumeId(reponse.id);
         }, (error) => {
             alert(error);
+        }).finally(() => {
+            setLoading(false);
         });
     };
 
     updateResume = () => {
-        const {resume} = this.props;
+        const {resume, setLoading} = this.props;
+
+        setLoading(true);
 
         const resu = AV.Object.createWithoutData('Resume', resume.id);
 
@@ -62,6 +68,8 @@ class ResumePreview extends Component {
             message.success('修改成功');
         }, (error) => {
             alert(error);
+        }).finally(() => {
+            setLoading(false);
         });
     };
 
@@ -233,6 +241,10 @@ export default compose(
             setResumeId: (resumeId) => ({
                 type: ACTION.SET_RESUME_ID,
                 payload: {resumeId}
+            }),
+            setLoading: (loading) => ({
+                type: ACTION.SET_LOADING,
+                payload: {loading}
             })
         }
     )

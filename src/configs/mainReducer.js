@@ -56,7 +56,9 @@ export const ACTION = {
     SET_RESUME_ID: 'setResumeId',
     SET_RESUME: 'setResume',
 
-    SET_USER: 'setUser'
+    SET_USER: 'setUser',
+
+    SET_LOADING: 'setLoading'
 };
 
 export default (state = defaultState, action) => {
@@ -65,7 +67,7 @@ export default (state = defaultState, action) => {
     const {
         selected, field, index, key, value,
         resumeId, userId: id, username: name,
-        resumeData
+        resumeData, loading
     } = action.payload || {};
 
     switch (action.type) {
@@ -175,6 +177,12 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 user: {id, name}
+            };
+
+        case ACTION.SET_LOADING:
+            return {
+                ...state,
+                loading
             };
 
         default:

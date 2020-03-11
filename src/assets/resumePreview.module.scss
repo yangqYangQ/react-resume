@@ -49,7 +49,7 @@
           height: 6px;
           background-color: var(--theme-color);
           float: left;
-          margin: 7px;
+          margin: 12px 5px 0;
         }
 
         span:first-child {
@@ -58,7 +58,6 @@
         }
 
         span:last-child {
-          align-self: center;
           float: right;
         }
 

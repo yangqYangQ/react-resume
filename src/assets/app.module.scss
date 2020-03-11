@@ -15,8 +15,9 @@
   min-height: 100vh;
   min-width: var(--min-width);
   background: var(--grey);
+  font-size: 16px;
 
-  > main {
+  main {
     margin: 0 auto;
     padding: 16px;
     display: flex;

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AV from "leancloud-storage";
+import {Spin} from 'antd';
 import Topbar from './components/Topbar';
 import ResumeEditor from './components/ResumeEditor';
 import ResumePreview from './components/ResumePreview';
@@ -36,6 +37,9 @@ class App extends Component {
 
     fetchResume = ({userId}) => {
         if (userId) {
+            const {setLoading} = this.props;
+            setLoading(true);
+
             const query = new AV.Query('Resume');
 
             query.find().then((resumes) => {
@@ -46,6 +50,8 @@ class App extends Component {
                     setResumeId(id);
                     setResume(attributes);
                 }
+            }).finally(() => {
+                setLoading(false);
             });
         }
     };
@@ -53,23 +59,27 @@ class App extends Component {
     render() {
         return (
             <div className={styles.page}>
-                <header>
-                    <Topbar/>
-                </header>
-                <main>
-                    <ResumeEditor/>
-                    <ResumePreview/>
-                </main>
+                <Spin spinning={this.props.loading}>
+                    <header>
+                        <Topbar/>
+                    </header>
+                    <main>
+                        <ResumeEditor/>
+                        <ResumePreview/>
+                    </main>
+                </Spin>
             </div>
         );
     }
 }
 
-export default connect(null,
+export default connect(
+    ({loading}) => ({loading}),
     {
         initResume: () => ({type: ACTION.INIT_RESUME_DATA}),
         setUser: (user) => ({type: ACTION.SET_USER, payload: {...user}}),
         setResumeId: (resumeId) => ({type: ACTION.SET_RESUME_ID, payload: {resumeId}}),
-        setResume: (resumeData) => ({type: ACTION.SET_RESUME, payload: {resumeData}})
+        setResume: (resumeData) => ({type: ACTION.SET_RESUME, payload: {resumeData}}),
+        setLoading: (loading) => ({type: ACTION.SET_LOADING, payload: {loading}})
     }
 )(App);
