@@ -3,10 +3,10 @@ import {Input} from 'antd';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {withTranslation} from 'react-i18next';
-import {ACTION} from '../configs/mainReducer';
+import {ACTION} from 'configs/mainReducer';
 import AddSvg from './Svg/Add';
 import DeleteSvg from './Svg/Delete';
-import styles from '../assets/resumeEditor.module.scss';
+import styles from 'assets/resumeEditor.module.scss';
 
 const {TextArea} = Input;
 

@@ -7,7 +7,7 @@ import {message, Modal} from 'antd';
 import {ACTION} from "configs/mainReducer";
 import LoginAndSignUpForm from './LoginAndSignUpForm';
 
-import styles from '../assets/topbar.module.scss';
+import styles from 'assets/topbar.module.scss';
 
 class Topbar extends Component {
     state = {

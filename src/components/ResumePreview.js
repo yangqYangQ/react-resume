@@ -14,9 +14,9 @@ import Skill from './Svg/Skill';
 import Preview from './Svg/Preview';
 import EmptyDataSvg from './Svg/EmptyData';
 import ProgressBar from './ProgressBar';
-import {ACTION} from '../configs/mainReducer';
+import {ACTION} from 'configs/mainReducer';
 
-import styles from '../assets/resumePreview.module.scss';
+import styles from 'assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
     archiveResume = () => {
@@ -91,7 +91,7 @@ class ResumePreview extends Component {
                     {
                         user.id ? <Button content={t('save')} type='primary' onClick={this.archiveResume}/> : null
                     }
-                    <Button content={t('preview')} left={10}/>
+                    <Button content={t('download')} left={10}/>
                 </div>
 
                 {

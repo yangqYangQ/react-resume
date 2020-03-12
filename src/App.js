@@ -2,16 +2,16 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AV from "leancloud-storage";
 import {Spin} from 'antd';
-import Topbar from './components/Topbar';
-import ResumeEditor from './components/ResumeEditor';
-import ResumePreview from './components/ResumePreview';
-import {ACTION} from "./configs/mainReducer";
+import Topbar from 'components/Topbar';
+import ResumeEditor from 'components/ResumeEditor';
+import ResumePreview from 'components/ResumePreview';
+import {ACTION} from "configs/mainReducer";
 
-import './utils/AVInit';
+import 'utils/AVInit';
 
 import 'normalize.css/normalize.css';
-import './assets/reset.css';
-import styles from './assets/app.module.scss';
+import 'assets/reset.css';
+import styles from 'assets/app.module.scss';
 
 class App extends Component {
     constructor(props) {

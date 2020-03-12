@@ -1,9 +1,9 @@
 import React from 'react';
-import Experience from '../components/Svg/Experience';
-import PersonalInfo from '../components/Svg/PersonalInfo';
-import Projects from '../components/Svg/Projects';
-import Skill from '../components/Svg/Skill';
-import Education from '../components/Svg/Education';
+import Experience from 'components/Svg/Experience';
+import PersonalInfo from 'components/Svg/PersonalInfo';
+import Projects from 'components/Svg/Projects';
+import Skill from 'components/Svg/Skill';
+import Education from 'components/Svg/Education';
 
 const defaultState = {
     selected: 'personalInfo',
