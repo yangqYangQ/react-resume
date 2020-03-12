@@ -3,12 +3,18 @@ import {withTranslation} from 'react-i18next';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import AV from "leancloud-storage";
-import {message} from 'antd';
+import {message, Modal} from 'antd';
+import {ACTION} from "configs/mainReducer";
+import LoginAndSignUpForm from './LoginAndSignUpForm';
 
 import styles from '../assets/topbar.module.scss';
-import {ACTION} from "../configs/mainReducer";
 
 class Topbar extends Component {
+    state = {
+        actionType: 'login',
+        modelVisible: false
+    };
+
     logOut = () => {
         const {t, initResume, setUser, setResumeId} = this.props;
 
@@ -18,14 +24,22 @@ class Topbar extends Component {
         setUser({userId: '', username: ''});
         initResume();
         setResumeId('');
+    };
 
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+    loginOrSignUpButtonClick = (actionType) => {
+        this.setState({
+            actionType,
+            modelVisible: true
+        });
+    };
+
+    modelCancel = () => {
+        this.setState({modelVisible: false});
     };
 
     render() {
         const {t, i18n, user} = this.props;
+        const {actionType, modelVisible} = this.state;
 
         return (
             <div className={styles.page}>
@@ -41,8 +55,12 @@ class Topbar extends Component {
                                         <span onClick={this.logOut}>{t('logout')}</span>
                                     </> :
                                     <>
-                                        <span>{t('signUp')}</span>
-                                        <span>{t('login')}</span>
+                                        <span onClick={() => this.loginOrSignUpButtonClick('login')}>
+                                            {t('login')}
+                                        </span>
+                                        <span onClick={() => this.loginOrSignUpButtonClick('signUp')}>
+                                            {t('signUp')}
+                                        </span>
                                     </>
                             }
                         </div>
@@ -52,6 +70,15 @@ class Topbar extends Component {
                             <span onClick={() => i18n.changeLanguage('en')}>English</span>
                         </div>
                     </div>
+
+                    <Modal title={t(actionType)}
+                           visible={modelVisible}
+                           onCancel={this.modelCancel}
+                           footer={null}
+                           width={420}
+                    >
+                        <LoginAndSignUpForm actionType={actionType} onClose={this.modelCancel}/>
+                    </Modal>
                 </div>
             </div>
         );
