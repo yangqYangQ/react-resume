@@ -15,10 +15,16 @@ import Preview from './Svg/Preview';
 import EmptyDataSvg from './Svg/EmptyData';
 import ProgressBar from './ProgressBar';
 import {ACTION} from 'configs/mainReducer';
+import {getCodeLangKey} from 'utils/common';
 
 import styles from 'assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
+    constructor(props) {
+        super(props);
+        this.exportRootRef = React.createRef();
+    }
+
     archiveResume = () => {
         const {resume} = this.props;
 
@@ -49,8 +55,8 @@ class ResumePreview extends Component {
         resu.save().then((reponse) => {
             message.success(t('saveSucceed'));
             setResumeId(reponse.id);
-        }, (error) => {
-            alert(error);
+        }, ({code}) => {
+            message.error(t(getCodeLangKey(code)));
         }).finally(() => {
             setLoading(false);
         });
@@ -67,8 +73,8 @@ class ResumePreview extends Component {
 
         resu.save().then(() => {
             message.success(t('updateSucceed'));
-        }, (error) => {
-            alert(error);
+        }, ({code}) => {
+            message.error(t(getCodeLangKey(code)));
         }).finally(() => {
             setLoading(false);
         });
@@ -82,16 +88,23 @@ class ResumePreview extends Component {
         avObj.set('education', education);
     };
 
+    toPDF = () => {
+    };
+
     render() {
-        const {resume: {personalInfo, projects, skills, experience, education}, user, t} = this.props;
+        const {resume: {id: resumeId, personalInfo, projects, skills, experience, education}, user, t} = this.props;
 
         return (
             <div className={styles.page}>
                 <div className='actions'>
                     {
-                        user.id ? <Button content={t('save')} type='primary' onClick={this.archiveResume}/> : null
+                        user.id && resumeId ?
+                            <Button content={t('save')} type='primary' onClick={this.archiveResume}/> : null
                     }
-                    <Button content={t('download')} left={10}/>
+                    <Button content={t('download')}
+                            left={10}
+                            onClick={this.toPDF}
+                    />
                 </div>
 
                 {
@@ -108,143 +121,145 @@ class ResumePreview extends Component {
                         </div> : null
                 }
 
-                {
-                    (personalInfo && personalInfo.name) ?
-                        <>
-                            <h1>{personalInfo.name}{t('vita')}</h1>
-                            <section className='personalInfo'>
-                                <div className='resume-section-total-heading'>
-                                    <PersonalInfo/>
-                                    <h2>{t('resume.personalInfo._')}</h2>
-                                </div>
-                                <div className='padding-5'>
-                                    <span className='brief-info'>{personalInfo.city}</span>
-                                    <span className='brief-info'>{personalInfo.birth}</span>
-                                    <span className='brief-info'>{personalInfo.job}</span>
-                                    <span className='brief-info'>{personalInfo.degree}</span>
-                                </div>
-                                <div className='padding-5'>
-                                    <label>{`${t('resume.personalInfo.mobile')}：`}</label>
-                                    <a href={`tel:${personalInfo.mobile}`}>
-                                        <span>{personalInfo.mobile}</span>
-                                    </a>
-                                </div>
-                                <div className='padding-5'>
-                                    <label>{`${t('resume.personalInfo.QQ')}：`}</label>
-                                    <span>{personalInfo.QQ}</span>
-                                </div>
-                                <div className='padding-5'>
-                                    <label>{`${t('resume.personalInfo.e-mail')}：`}</label>
-                                    <a href={`mailto:${personalInfo['e-mail']}`}>
-                                        <span>{personalInfo['e-mail']}</span>
-                                    </a>
-                                </div>
-                                <div className='padding-5'>
-                                    <label>{`${t('resume.personalInfo.github')}：`}</label>
-                                    <a href={personalInfo['github']} target='_blank'
-                                       rel="noopener noreferrer"
-                                    >
-                                        <span>{personalInfo['github']}</span>
-                                    </a>
-                                </div>
-                            </section>
-                        </> : null
-                }
+                <div ref={this.exportRootRef}>
+                    {
+                        (personalInfo && personalInfo.name) ?
+                            <>
+                                <h1>{personalInfo.name}{t('vita')}</h1>
+                                <section className='personalInfo'>
+                                    <div className='resume-section-total-heading'>
+                                        <PersonalInfo/>
+                                        <h2>{t('resume.personalInfo._')}</h2>
+                                    </div>
+                                    <div className='padding-5'>
+                                        <span className='brief-info'>{personalInfo.city}</span>
+                                        <span className='brief-info'>{personalInfo.birth}</span>
+                                        <span className='brief-info'>{personalInfo.job}</span>
+                                        <span className='brief-info'>{personalInfo.degree}</span>
+                                    </div>
+                                    <div className='padding-5'>
+                                        <label>{`${t('resume.personalInfo.mobile')}：`}</label>
+                                        <a href={`tel:${personalInfo.mobile}`}>
+                                            <span>{personalInfo.mobile}</span>
+                                        </a>
+                                    </div>
+                                    <div className='padding-5'>
+                                        <label>{`${t('resume.personalInfo.QQ')}：`}</label>
+                                        <span>{personalInfo.QQ}</span>
+                                    </div>
+                                    <div className='padding-5'>
+                                        <label>{`${t('resume.personalInfo.e-mail')}：`}</label>
+                                        <a href={`mailto:${personalInfo['e-mail']}`}>
+                                            <span>{personalInfo['e-mail']}</span>
+                                        </a>
+                                    </div>
+                                    <div className='padding-5'>
+                                        <label>{`${t('resume.personalInfo.github')}：`}</label>
+                                        <a href={personalInfo['github']} target='_blank'
+                                           rel="noopener noreferrer"
+                                        >
+                                            <span>{personalInfo['github']}</span>
+                                        </a>
+                                    </div>
+                                </section>
+                            </> : null
+                    }
 
-                {
-                    (projects && projects.length > 0) ?
-                        <section className='projects'>
-                            <div className='resume-section-total-heading'>
-                                <Projects/>
-                                <h2>{`${t('resume.projects._')}：`}</h2>
-                            </div>
-                            <ol>
-                                {
-                                    projects.map(({details, link, name}, index) =>
-                                        <li key={index} className='padding-5'>
-                                            <div className='resume-item'>
-                                                <span>{name}</span>
-                                                <span>
+                    {
+                        (projects && projects.length > 0) ?
+                            <section className='projects'>
+                                <div className='resume-section-total-heading'>
+                                    <Projects/>
+                                    <h2>{`${t('resume.projects._')}：`}</h2>
+                                </div>
+                                <ol>
+                                    {
+                                        projects.map(({details, link, name}, index) =>
+                                            <li key={index} className='padding-5'>
+                                                <div className='resume-item'>
+                                                    <span>{name}</span>
+                                                    <span>
                                                     <a href={`${link}`} title={t('preview')} target='_blank'
                                                        rel="noopener noreferrer">
                                                         <Preview/>
                                                     </a>
                                                 </span>
-                                            </div>
-                                            <p>{details}</p>
-                                        </li>
-                                    )
-                                }
-                            </ol>
-                        </section> : null
-                }
+                                                </div>
+                                                <p>{details}</p>
+                                            </li>
+                                        )
+                                    }
+                                </ol>
+                            </section> : null
+                    }
 
-                {
-                    (skills && skills.length > 0) ?
-                        <section className='skills'>
-                            <div className='resume-section-total-heading'>
-                                <Skill/>
-                                <h2>{t('resume.skills._')}</h2>
-                            </div>
-                            <ol className='skill-items'>
-                                {
-                                    skills.map(({level, name}, index) =>
-                                        <li key={index} className='padding-5'>
-                                            <span className='skill-item-text'>{name}</span>
-                                            <div className='skill-item-progress'>
-                                                <ProgressBar value={level} size='small'/>
-                                            </div>
-                                        </li>
-                                    )
-                                }
-                            </ol>
-                        </section> : null
-                }
+                    {
+                        (skills && skills.length > 0) ?
+                            <section className='skills'>
+                                <div className='resume-section-total-heading'>
+                                    <Skill/>
+                                    <h2>{t('resume.skills._')}</h2>
+                                </div>
+                                <ol className='skill-items'>
+                                    {
+                                        skills.map(({level, name}, index) =>
+                                            <li key={index} className='padding-5'>
+                                                <span className='skill-item-text'>{name}</span>
+                                                <div className='skill-item-progress'>
+                                                    <ProgressBar value={level} size='small'/>
+                                                </div>
+                                            </li>
+                                        )
+                                    }
+                                </ol>
+                            </section> : null
+                    }
 
-                {
-                    (experience && experience.length > 0) ?
-                        <section className='experience'>
-                            <div className='resume-section-total-heading'>
-                                <Experience/>
-                                <h2>{t('resume.experience._')}</h2>
-                            </div>
-                            <ol>
-                                {
-                                    experience.map(({company, date, details}, index) =>
-                                        <li key={index} className='padding-5'>
-                                            <div className='resume-item'>
-                                                <span>{company}</span>
-                                                <span>{date}</span>
-                                            </div>
-                                            <p>{details}</p>
-                                        </li>
-                                    )
-                                }
-                            </ol>
-                        </section> : null
-                }
+                    {
+                        (experience && experience.length > 0) ?
+                            <section className='experience'>
+                                <div className='resume-section-total-heading'>
+                                    <Experience/>
+                                    <h2>{t('resume.experience._')}</h2>
+                                </div>
+                                <ol>
+                                    {
+                                        experience.map(({company, date, details}, index) =>
+                                            <li key={index} className='padding-5'>
+                                                <div className='resume-item'>
+                                                    <span>{company}</span>
+                                                    <span>{date}</span>
+                                                </div>
+                                                <p>{details}</p>
+                                            </li>
+                                        )
+                                    }
+                                </ol>
+                            </section> : null
+                    }
 
-                {
-                    (education && education.length > 0) ?
-                        <section className='education'>
-                            <div className='resume-section-total-heading'>
-                                <Education/>
-                                <h2>{t('resume.education._')}</h2>
-                            </div>
-                            <ol>
-                                {
-                                    education.map(({school, date}, index) =>
-                                        <li key={index} className='padding-5'>
-                                            <div className='resume-item'>
-                                                <span>{school}</span>
-                                                <span>{date}</span>
-                                            </div>
-                                        </li>
-                                    )
-                                }
-                            </ol>
-                        </section> : null
-                }
+                    {
+                        (education && education.length > 0) ?
+                            <section className='education'>
+                                <div className='resume-section-total-heading'>
+                                    <Education/>
+                                    <h2>{t('resume.education._')}</h2>
+                                </div>
+                                <ol>
+                                    {
+                                        education.map(({school, date}, index) =>
+                                            <li key={index} className='padding-5'>
+                                                <div className='resume-item'>
+                                                    <span>{school}</span>
+                                                    <span>{date}</span>
+                                                </div>
+                                            </li>
+                                        )
+                                    }
+                                </ol>
+                            </section> : null
+                    }
+                </div>
             </div>
         );
     }

@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {withTranslation} from 'react-i18next';
 import AV from "leancloud-storage";
-import {Spin} from 'antd';
+import {Spin, message} from 'antd';
 import Topbar from 'components/Topbar';
 import ResumeEditor from 'components/ResumeEditor';
 import ResumePreview from 'components/ResumePreview';
@@ -37,7 +39,7 @@ class App extends Component {
 
     fetchResume = ({userId}) => {
         if (userId) {
-            const {setLoading} = this.props;
+            const {setLoading, t} = this.props;
             setLoading(true);
 
             const query = new AV.Query('Resume');
@@ -50,6 +52,8 @@ class App extends Component {
                     setResumeId(id);
                     setResume(attributes);
                 }
+            }, () => {
+                message.error(t('unknown'));
             }).finally(() => {
                 setLoading(false);
             });
@@ -73,13 +77,16 @@ class App extends Component {
     }
 }
 
-export default connect(
-    ({loading}) => ({loading}),
-    {
-        initResume: () => ({type: ACTION.INIT_RESUME_DATA}),
-        setUser: (user) => ({type: ACTION.SET_USER, payload: {...user}}),
-        setResumeId: (resumeId) => ({type: ACTION.SET_RESUME_ID, payload: {resumeId}}),
-        setResume: (resumeData) => ({type: ACTION.SET_RESUME, payload: {resumeData}}),
-        setLoading: (loading) => ({type: ACTION.SET_LOADING, payload: {loading}})
-    }
+export default compose(
+    withTranslation(),
+    connect(
+        ({loading}) => ({loading}),
+        {
+            initResume: () => ({type: ACTION.INIT_RESUME_DATA}),
+            setUser: (user) => ({type: ACTION.SET_USER, payload: {...user}}),
+            setResumeId: (resumeId) => ({type: ACTION.SET_RESUME_ID, payload: {resumeId}}),
+            setResume: (resumeData) => ({type: ACTION.SET_RESUME, payload: {resumeData}}),
+            setLoading: (loading) => ({type: ACTION.SET_LOADING, payload: {loading}})
+        }
+    )
 )(App);

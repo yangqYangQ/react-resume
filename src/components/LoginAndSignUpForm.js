@@ -7,6 +7,7 @@ import AV from "leancloud-storage";
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {ACTION} from "configs/mainReducer";
+import {getCodeLangKey} from 'utils/common'
 
 const layout = {
     labelCol: {span: 4},
@@ -41,7 +42,7 @@ class CustomForm extends Component {
             this.fetchResume({userId, username});
         }, ({code}) => {
             // 登录失败（可能是密码错误）
-            message.error(t(this.getCodeLangKey(code)));
+            message.error(t(getCodeLangKey(code)));
         });
     };
 
@@ -66,7 +67,7 @@ class CustomForm extends Component {
             this.fetchResume({userId, username});
         }, ({code}) => {
             // 注册失败（通常是因为用户名已被使用）
-            message.error(t(this.getCodeLangKey(code)));
+            message.error(t(getCodeLangKey(code)));
         });
     };
 
@@ -89,17 +90,6 @@ class CustomForm extends Component {
                 setLoading(false);
             });
         }
-    };
-
-    getCodeLangKey = (code) => {
-        const codes = {
-            202: '202',
-            210: '210',
-            211: '211',
-            217: '217'
-        };
-
-        return codes[code] || 'unknown';
     };
 
     render() {
