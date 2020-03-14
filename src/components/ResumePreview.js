@@ -20,11 +20,6 @@ import {getCodeLangKey} from 'utils/common';
 import styles from 'assets/resumePreview.module.scss';
 
 class ResumePreview extends Component {
-    constructor(props) {
-        super(props);
-        this.exportRootRef = React.createRef();
-    }
-
     archiveResume = () => {
         const {resume} = this.props;
 
@@ -88,7 +83,8 @@ class ResumePreview extends Component {
         avObj.set('education', education);
     };
 
-    toPDF = () => {
+    download = () => {
+        window.print();
     };
 
     render() {
@@ -103,25 +99,25 @@ class ResumePreview extends Component {
                     }
                     <Button content={t('download')}
                             left={10}
-                            onClick={this.toPDF}
+                            onClick={this.download}
                     />
                 </div>
 
-                {
-                    (
-                        (!personalInfo || !personalInfo.name) &&
-                        (!projects || projects.length === 0) &&
-                        (!skills || skills.length === 0) &&
-                        (!experience || experience.length === 0) &&
-                        (!education || education.length === 0)
-                    ) ?
-                        <div className='empty-container'>
-                            <EmptyDataSvg/>
-                            <span>{t('emptyContentWarning')}</span>
-                        </div> : null
-                }
+                <div className='print-resume'>
+                    {
+                        (
+                            (!personalInfo || !personalInfo.name) &&
+                            (!projects || projects.length === 0) &&
+                            (!skills || skills.length === 0) &&
+                            (!experience || experience.length === 0) &&
+                            (!education || education.length === 0)
+                        ) ?
+                            <div className='empty-container'>
+                                <EmptyDataSvg/>
+                                <span>{t('emptyContentWarning')}</span>
+                            </div> : null
+                    }
 
-                <div ref={this.exportRootRef}>
                     {
                         (personalInfo && personalInfo.name) ?
                             <>
