@@ -149,6 +149,11 @@
         bottom: 0;
         background-color: var(--white);
 
+        /* force print the background color and/or image */
+        color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+
         section {
           /* section don't split across pages if possible. */
           page-break-inside: avoid;
