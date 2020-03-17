@@ -94,7 +94,7 @@ class ResumePreview extends Component {
             <div className={styles.page}>
                 <div className='actions'>
                     {
-                        user.id && resumeId ?
+                        user.id ?
                             <Button content={t('save')} type='primary' onClick={this.archiveResume}/> : null
                     }
                     <Button content={t('download')}
