@@ -100,8 +100,16 @@
         padding-right: 10px;
       }
 
+      .brief-info:first-child {
+        margin-left: 20px;
+      }
+
       .brief-info:last-child {
         border: none;
+      }
+
+      label{
+        margin-left: 20px;
       }
     }
 
@@ -155,11 +163,17 @@
         print-color-adjust: exact;
 
         section {
-          /* section don't split across pages if possible. */
-          page-break-inside: avoid;
+          li {
+            /* section don't split across pages if possible. */
+            page-break-inside: avoid;
 
-          a[href]::after {
-            content: "(" attr(href) ")";
+            a[href]::after {
+              /*content: "(" attr(href) ")";
+              max-width: 200px;
+              display: inline-block;
+              overflow: hidden;
+              white-space: nowrap;*/
+            }
           }
         }
       }
